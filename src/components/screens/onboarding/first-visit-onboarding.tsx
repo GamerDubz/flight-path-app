@@ -8,12 +8,22 @@ const STORAGE_KEY = "flight-path-onboarding-completed";
 
 type SlideId = 0 | 1 | 2 | 3 | 4;
 
+const UTILITY_BG =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuDTHE9b-3rwG6i9eZ8DNs2yZIlvnjj6AEa1QGeyzHcFClNWi5q4EmMydDKYXB_HRLTERak8wmmTP7M2_YFbcY5uFhfL00d2nXLhH26lNK1SvBMPnn_dhlvYuPv0CikncprE-U9DhiMcHFM7603GzVxmS_lheG9q2Wu6x3BUaqaHKm_baDzVDqlB-gVRV3-cLeRHY8sUZRTsQzJ6jreaz-YX5EWxP95r1YDGNGZpvclGgpWn8745hrbpVKeEQC6HkD3JgI5V9yo_U8Jv";
+const GAMIFICATION_BG =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuBoRw6PmeicTlYHXAY8iPM3kFN9dTMkOkttXhaWj7BptA1RWBjgwDty9dMco5XAS8PDPb4B3-j3WgrQgG2HxPpA0u1rDVPa17aYUqXD_TJT5iBhrQCDwO4AqQY2VT7CuEppwcyQG3gpX6jrRl6UqrgSniJsEYkhkkGLL4-0gRRmsEjwYaU9gZRc3vqOsyZKS7VzUc_Ed3TOABG7WKQxYbOas817SckP31-lCESUeOvTzMOgxZEzseq_8Qh460PV28OJ_pn5gPrZF4p3";
+const PERMISSIONS_BG =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuDD_zhC58TKMFxna8TJxOZjIT2jyWt1cm42RYXirmhwyLnmWI0T7gu5-8sTcr81l5CSrY2Rm6O8hDXUIDP3dMTQ9sgAVj-prFWqTrgC5YnOAloTYUrPoqmapSdbfR-M0QrLg7X1FabMQwjwbqgk6rqRokCRCdChjHlWUPhDTChD_a5r77y4bY2VyY8nzRESzeIoZag5l6OkSh0ESjLKKDHHu41bt7lfOvLyqbxh9yLyO5dfvwccDDjzjMA-JdF3a8XwigJ6QbA2C3Vr";
+const AUTH_BG =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuAPLpQq7hncY8XWSZe2t0Pm3lMXlDjL5LEZPU4EDHWboVTYSlZE9Do0H_35h0FfJZCIdUf4cUaLEKz1EslzWgA3JCVe5CpcZtE5Ew57wY4nuQiAZcTlVzArBMimv-9AS6VPSn1xw7D8VcCfYV2m7KbaCakk59npXszKnDF75URgoMPHL_UL4CY0ioAMJYu9T54xOHSEITra4lwvkIVzw0GPy53yPSkRQcqMUYwptmm2ptixw0DVLUwga2Di0s18oPSMAuCRqcltd-MM";
+
 function markComplete(onComplete: () => void) {
   try {
     window.localStorage.setItem(STORAGE_KEY, "1");
   } catch {
     // Ignore storage failures and continue to the app.
   }
+
   onComplete();
 }
 
@@ -24,7 +34,7 @@ function PaginationDots({ active }: { active: number }) {
         <span
           key={index}
           className={`h-2 rounded-full transition-all duration-300 ${
-            active === index ? "w-8 bg-[#0058bc]" : "w-2 bg-[#c1c6d7]/55"
+            active === index ? "w-8 bg-[#0058bc]" : "w-2 bg-[#c1c6d7]/50"
           }`}
         />
       ))}
@@ -34,16 +44,14 @@ function PaginationDots({ active }: { active: number }) {
 
 function GlobeIntroSlide({
   onNext,
-  onSkip,
 }: {
   onNext: () => void;
-  onSkip: () => void;
 }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
-      <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "linear-gradient(to bottom, rgba(249,249,251,0.12), rgba(249,249,251,0.6)), radial-gradient(circle at 50% 20%, rgba(255,255,255,0.35), transparent 28%), radial-gradient(circle at 50% 60%, rgba(0,122,255,0.18), transparent 40%), radial-gradient(circle at center, rgba(10,17,40,0.98), rgba(10,17,40,0.88))" }} />
+    <div className="relative min-h-dvh overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.18),transparent_26%),radial-gradient(circle_at_50%_58%,rgba(0,122,255,0.16),transparent_38%),linear-gradient(to_bottom,rgba(10,17,40,1),rgba(10,17,40,0.9))]" />
       <div className="absolute inset-0 z-0 opacity-95">
-        <div className="absolute left-1/2 top-[-10vh] w-[180vw] max-w-[1560px] -translate-x-1/2 sm:w-[135vw] lg:top-[-14vh] lg:w-[115vw]">
+        <div className="absolute left-1/2 top-[-12vh] w-[176vw] max-w-[1600px] -translate-x-1/2 sm:w-[130vw] lg:top-[-14vh] lg:w-[112vw]">
           <Globe
             markers={[]}
             arcs={[]}
@@ -59,63 +67,38 @@ function GlobeIntroSlide({
             diffuse={1.25}
           />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_38%,_rgba(10,17,40,0.18)_76%,_rgba(10,17,40,0.38)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_38%,_rgba(10,17,40,0.2)_76%,_rgba(10,17,40,0.42)_100%)]" />
       </div>
 
-      <div className="absolute inset-x-0 top-0 z-10 h-40 bg-linear-to-b from-black/32 to-transparent" />
-
-      <div className="relative z-20 flex min-h-screen flex-col">
-        <header className="flex items-center justify-between px-5 pt-[calc(env(safe-area-inset-top)+16px)]">
-          <div className="flex items-center gap-2 text-white">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/10 backdrop-blur-md">
-              <AppIcon name="flight_takeoff" filled className="h-5 w-5 text-white" />
+      <main className="relative z-10 flex min-h-dvh items-end px-4 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-[calc(env(safe-area-inset-top)+20px)]">
+        <div className="mx-auto w-full max-w-[390px]">
+          <div className="animate-fp-fade-up rounded-[24px] border border-white/50 bg-white/72 p-5 text-[#1a1c1d] shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[25px]">
+            <div className="flex flex-col gap-2">
+              <h1 className="text-[32px] font-bold leading-[1.1] tracking-[-0.02em] text-[#004493]">
+                Your Journey,
+                <br />
+                Visualized.
+              </h1>
+              <p className="max-w-[300px] text-[17px] leading-[1.5] text-[#414755]">
+                Turn your flights into a beautiful, interactive 3D world.
+              </p>
             </div>
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-white/55">
-                Flight Path
-              </div>
-              <div className="text-sm font-semibold text-white/85">
-                First-time setup
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={onSkip}
-            className="rounded-full px-3 py-2 text-sm font-semibold text-white/75 transition-colors hover:bg-white/8 hover:text-white"
-          >
-            Skip
-          </button>
-        </header>
 
-        <main className="flex flex-1 items-end px-4 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-8">
-          <div className="mx-auto w-full max-w-md">
-            <div className="animate-fp-fade-up rounded-[24px] border border-white/50 bg-white/72 p-5 text-[#1a1c1d] shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[25px] sm:p-6">
-              <div className="flex flex-col gap-2">
-                <h1 className="text-headline-lg text-[#004493]">
-                  Your Journey, Visualized.
-                </h1>
-                <p className="text-body-lg text-[#414755]">
-                  Turn your flights into a beautiful, interactive 3D world.
-                </p>
-              </div>
+            <button
+              type="button"
+              onClick={onNext}
+              className="mt-4 flex h-14 w-full items-center justify-center gap-3 rounded-full bg-[#0058bc] px-6 text-white transition-colors hover:bg-[#0050aa]"
+            >
+              <span className="text-[17px] font-semibold leading-[1.5]">Start Exploring</span>
+              <AppIcon name="arrow_forward" className="h-6 w-6" />
+            </button>
 
-              <button
-                type="button"
-                onClick={onNext}
-                className="mt-4 flex h-14 w-full items-center justify-center gap-3 rounded-full bg-[#0058bc] px-6 text-white transition-colors hover:bg-[#0050aa]"
-              >
-                <span className="text-body-lg font-semibold">Start Exploring</span>
-                <AppIcon name="arrow_forward" className="h-6 w-6" />
-              </button>
-
-              <div className="mt-5">
-                <PaginationDots active={0} />
-              </div>
+            <div className="mt-5">
+              <PaginationDots active={0} />
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
@@ -126,34 +109,45 @@ function LogPassSlide({
   onNext: () => void;
 }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
-      <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-80 mix-blend-multiply" style={{ backgroundImage: "radial-gradient(circle at 50% 20%, rgba(255,255,255,0.45), transparent 30%), linear-gradient(to bottom, rgba(243,243,245,0.8), rgba(233,236,241,0.96)), radial-gradient(circle at 50% 72%, rgba(0,122,255,0.08), transparent 42%)" }} />
+    <div className="relative min-h-dvh overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-top opacity-80 mix-blend-multiply"
+        style={{ backgroundImage: `url("${UTILITY_BG}")` }}
+      />
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#f9f9fb]/20 via-[#f9f9fb]/60 to-[#f9f9fb]" />
 
-      <div className="relative z-10 flex h-screen flex-col justify-end pb-10 px-5">
+      <div className="relative z-10 flex min-h-dvh flex-col justify-end pb-10 px-5">
         <main className="relative z-10 flex flex-col items-center">
-          <div className="animate-fp-scale-in relative z-20 w-[220px] overflow-hidden rounded-2xl border-[0.5px] border-[#c1c6d7]/30 bg-[#ffffff] shadow-[0_20px_40px_-10px_rgba(0,88,188,0.15)]">
+          <div className="animate-fp-scale-in relative z-20 w-[220px] overflow-hidden rounded-2xl border-[0.5px] border-[#c1c6d7]/30 bg-white shadow-[0_20px_40px_-10px_rgba(0,88,188,0.15)]">
             <div className="flex items-center justify-between bg-[#0058bc] px-4 py-3 text-white">
               <span className="text-[12px] font-bold uppercase tracking-widest">Aero Pass</span>
               <AppIcon name="flight" filled className="h-[18px] w-[18px]" />
             </div>
 
-            <div className="flex items-center justify-between bg-[#ffffff] p-5">
+            <div className="flex items-center justify-between bg-white p-5">
               <div className="flex flex-col">
-                <span className="text-headline-md tracking-tight text-[#1a1c1d]">JFK</span>
-                <span className="text-body-sm text-[#717786]">New York</span>
+                <span className="text-[24px] font-semibold leading-[1.3] tracking-tight text-[#1a1c1d]">
+                  JFK
+                </span>
+                <span className="text-[14px] leading-[1.4] text-[#717786]">New York</span>
               </div>
               <AppIcon name="flight_takeoff" className="px-2 text-[#c1c6d7]" />
               <div className="flex flex-col text-right">
-                <span className="text-headline-md tracking-tight text-[#1a1c1d]">LHR</span>
-                <span className="text-body-sm text-[#717786]">London</span>
+                <span className="text-[24px] font-semibold leading-[1.3] tracking-tight text-[#1a1c1d]">
+                  LHR
+                </span>
+                <span className="text-[14px] leading-[1.4] text-[#717786]">London</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-2 border-t-[0.5px] border-[#c1c6d7]/20 bg-[#f3f3f5] px-5 py-4">
               <div className="flex items-center justify-between">
-                <span className="text-[12px] font-bold uppercase tracking-[0.05em] text-[#414755]">FLIGHT</span>
-                <span className="text-[12px] font-bold uppercase tracking-[0.05em] text-[#1a1c1d]">AE-402</span>
+                <span className="text-[12px] font-bold uppercase tracking-[0.05em] text-[#414755]">
+                  FLIGHT
+                </span>
+                <span className="text-[12px] font-bold uppercase tracking-[0.05em] text-[#1a1c1d]">
+                  AE-402
+                </span>
               </div>
               <div className="barcode-pattern mt-2 h-8 w-full text-[#c1c6d7] opacity-60" />
             </div>
@@ -167,9 +161,11 @@ function LogPassSlide({
             <span className="h-2 w-2 rounded-full bg-[#c1c6d7]/40" />
           </div>
 
-          <div className="animate-fp-fade-up w-full max-w-md rounded-[24px] border border-[#ffffff]/50 bg-[#ffffff]/70 px-5 py-8 text-center shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[25px]">
-            <h1 className="text-headline-lg text-[#1a1c1d]">Log Effortlessly.</h1>
-            <p className="mx-auto mt-4 max-w-xs text-body-lg text-[#414755]">
+          <div className="animate-fp-fade-up w-full max-w-md rounded-[24px] border border-white/50 bg-white/70 px-5 py-8 text-center shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[25px]">
+            <h1 className="text-[32px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1a1c1d]">
+              Log Effortlessly.
+            </h1>
+            <p className="mx-auto mt-4 max-w-xs text-[17px] leading-[1.5] text-[#414755]">
               Enter a flight number and we&apos;ll handle the rest. Track your miles, hours, and routes automatically.
             </p>
 
@@ -193,20 +189,20 @@ function EarnBuildSlide({
   onNext: () => void;
 }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
+    <div className="relative min-h-dvh overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] h-[80vw] w-[80vw] rounded-full bg-[#d8defe]/30 blur-[80px]" />
         <div className="absolute bottom-[-10%] right-[-20%] h-[90vw] w-[90vw] rounded-full bg-[#d8e2ff]/40 blur-[100px]" />
       </div>
 
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-center p-5">
+      <main className="relative z-10 flex min-h-dvh flex-col items-center justify-center p-5">
         <div className="flex w-full max-w-md flex-col items-center">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border-[0.5px] border-white/50 bg-white/70 shadow-[0_8px_32px_rgba(0,40,90,0.08)] backdrop-blur-[25px]">
             <div className="absolute inset-0 z-20 bg-gradient-to-tr from-white/10 via-transparent to-white/60" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="3D white-glass rendered Eiffel Tower rotating inside a luminous crystalline void"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoRw6PmeicTlYHXAY8iPM3kFN9dTMkOkttXhaWj7BptA1RWBjgwDty9dMco5XAS8PDPb4B3-j3WgrQgG2HxPpA0u1rDVPa17aYUqXD_TJT5iBhrQCDwO4AqQY2VT7CuEppwcyQG3gpX6jrRl6UqrgSniJsEYkhkkGLL4-0gRRmsEjwYaU9gZRc3vqOsyZKS7VzUc_Ed3TOABG7WKQxYbOas817SckP31-lCESUeOvTzMOgxZEzseq_8Qh460PV28OJ_pn5gPrZF4p3"
+              src={GAMIFICATION_BG}
               className="absolute inset-0 h-full w-full scale-105 object-cover mix-blend-luminosity opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white/80" />
@@ -226,8 +222,10 @@ function EarnBuildSlide({
           <span className="h-2 w-8 rounded-full bg-[#0058bc] shadow-[0_0_8px_rgba(0,88,188,0.4)]" />
         </div>
 
-        <h1 className="mb-4 text-metric-display text-[#1a1c1d]">Earn &amp; Build.</h1>
-        <p className="mb-10 max-w-xs text-body-lg text-[#414755]">
+        <h1 className="mb-4 text-[48px] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#1a1c1d]">
+          Earn &amp; Build.
+        </h1>
+        <p className="mb-10 max-w-xs text-[17px] leading-[1.5] text-[#414755]">
           Unlock exclusive passport stamps and use your air miles to build 3D landmarks on your personal globe.
         </p>
 
@@ -253,99 +251,80 @@ function NotificationsSlide({
   onSkip: () => void;
 }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
-      <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60" style={{ backgroundImage: "radial-gradient(circle at 50% 20%, rgba(255,255,255,0.55), transparent 24%), linear-gradient(to bottom, rgba(249,249,251,0.18), rgba(224,228,235,0.36)), radial-gradient(circle at 65% 0%, rgba(0,122,255,0.18), transparent 24%), radial-gradient(circle at 40% 100%, rgba(255,149,0,0.15), transparent 26%)" }} />
+    <div className="relative min-h-dvh overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60"
+        style={{ backgroundImage: `url("${PERMISSIONS_BG}")` }}
+      />
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/20 to-[#e2e4eb]/40 mix-blend-overlay" />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-between">
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-20%] left-[-10%] h-[80vw] w-[80vw] rounded-full bg-[#d8defe]/30 blur-[80px]" />
-          <div className="absolute bottom-[-10%] right-[-20%] h-[90vw] w-[90vw] rounded-full bg-[#d8e2ff]/40 blur-[100px]" />
-        </div>
-
-        <main className="relative z-10 flex flex-1 items-center justify-center p-5">
-          <div className="animate-fp-scale-in w-full max-w-[375px] rounded-[24px] border-[0.5px] border-white/50 bg-white/70 p-[32px] text-center shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-[25px]">
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-[0.5px] border-white bg-white/50 shadow-sm backdrop-blur-[40px]">
-              <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#007AFF]/10">
-                <div className="absolute inset-0 scale-110 rounded-full border border-[#007AFF]/20" />
-                <AppIcon name="notifications" filled className="h-8 w-8 text-[#007AFF]" />
-              </div>
-            </div>
-
-            <h1 className="mb-3 text-headline-lg text-[#1a1c1d]">
-              Never Miss a Flight.
-            </h1>
-            <p className="mx-auto mb-8 max-w-[280px] text-body-lg text-[#414755]">
-              Allow notifications for boarding reminders, gate changes, and milestone alerts.
-            </p>
-
-            <div className="flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={onNext}
-                className="flex h-14 w-full items-center justify-center rounded-full bg-[#0058bc] px-5 text-[12px] font-bold uppercase tracking-widest text-white transition-transform active:scale-[0.98]"
-              >
-                Enable Notifications
-              </button>
-              <button
-                type="button"
-                onClick={onSkip}
-                className="flex h-14 w-full items-center justify-center rounded-full border border-transparent bg-white/20 px-5 text-[12px] font-bold uppercase tracking-widest text-[#414755] transition-colors hover:border-white/50 hover:bg-white/40"
-              >
-                Not right now
-              </button>
+      <main className="relative z-10 flex min-h-dvh items-center justify-center p-5">
+        <div className="animate-fp-scale-in w-full max-w-[375px] rounded-[24px] border-[0.5px] border-white/50 bg-white/70 p-[32px] text-center shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-[25px]">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-[0.5px] border-white bg-white/50 shadow-sm backdrop-blur-[40px]">
+            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#007AFF]/10">
+              <div className="absolute inset-0 scale-110 rounded-full border border-[#007AFF]/20" />
+              <AppIcon name="notifications" filled className="h-8 w-8 text-[#007AFF]" />
             </div>
           </div>
-        </main>
-      </div>
+
+          <h1 className="mb-3 text-[32px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1a1c1d]">
+            Never Miss a Flight.
+          </h1>
+          <p className="mx-auto mb-8 max-w-[280px] text-[17px] leading-[1.5] text-[#414755]">
+            Allow notifications for boarding reminders, gate changes, and milestone alerts.
+          </p>
+
+          <div className="flex flex-col gap-3">
+            <button
+              type="button"
+              onClick={onNext}
+              className="flex h-14 w-full items-center justify-center rounded-full bg-[#0058bc] px-5 text-[12px] font-bold uppercase tracking-widest text-white transition-transform active:scale-[0.98]"
+            >
+              Enable Notifications
+            </button>
+            <button
+              type="button"
+              onClick={onSkip}
+              className="flex h-14 w-full items-center justify-center rounded-full border border-transparent bg-white/20 px-5 text-[12px] font-bold uppercase tracking-widest text-[#414755] transition-colors hover:border-white/50 hover:bg-white/40"
+            >
+              Not right now
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
 
 function AuthSlide({ onComplete }: { onComplete: () => void }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
-      <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60" style={{ backgroundImage: "radial-gradient(circle at 40% 0%, rgba(255,255,255,0.55), transparent 22%), radial-gradient(circle at 70% 25%, rgba(172,198,255,0.5), transparent 28%), linear-gradient(to bottom, rgba(255,255,255,0.24), rgba(226,228,235,0.42))" }} />
+    <div className="relative min-h-dvh overflow-hidden bg-[#f9f9fb] text-[#1a1c1d]">
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60"
+        style={{ backgroundImage: `url("${AUTH_BG}")` }}
+      />
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-[#1a1c1d]/30 pointer-events-none" />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-end">
-        <main className="relative z-10 flex w-full max-w-md flex-col items-center justify-center p-[20px]">
-          <div className="animate-fp-scale-in w-full aspect-[4/5] overflow-hidden rounded-3xl border-[0.5px] border-white/50 bg-white/70 shadow-[0_8px_32px_rgba(0,40,90,0.08)] backdrop-blur-[25px]">
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/60" />
-            <div className="relative flex h-full w-full items-center justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt="3D white-glass rendered Eiffel Tower rotating inside a luminous crystalline void"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoRw6PmeicTlYHXAY8iPM3kFN9dTMkOkttXhaWj7BptA1RWBjgwDty9dMco5XAS8PDPb4B3-j3WgrQgG2HxPpA0u1rDVPa17aYUqXD_TJT5iBhrQCDwO4AqQY2VT7CuEppwcyQG3gpX6jrRl6UqrgSniJsEYkhkkGLL4-0gRRmsEjwYaU9gZRc3vqOsyZKS7VzUc_Ed3TOABG7WKQxYbOas817SckP31-lCESUeOvTzMOgxZEzseq_8Qh460PV28OJ_pn5gPrZF4p3"
-                className="absolute inset-0 h-full w-full scale-105 object-cover mix-blend-luminosity opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white/80" />
-            </div>
-            <div className="absolute bottom-8 left-0 flex w-full justify-center gap-1 opacity-30">
-              <span className="h-px w-2 bg-[#0058bc]" />
-              <span className="h-px w-4 bg-[#0058bc]" />
-              <span className="h-px w-2 bg-[#0058bc]" />
-            </div>
-          </div>
-        </main>
-
-        <section className="relative z-10 w-full bg-white/70 px-[20px] pb-[48px] pt-[32px] backdrop-blur-[40px]">
-          <div className="mx-auto flex max-w-md flex-col gap-6 rounded-t-[32px] md:rounded-[32px] md:border md:border-white/60 md:shadow-[0_-8px_32px_rgba(0,0,0,0.1)]">
+      <main className="relative z-20 flex min-h-dvh flex-col justify-end">
+        <section className="w-full bg-white/70 px-5 pb-[48px] pt-[32px] backdrop-blur-[40px]">
+          <div className="mx-auto flex max-w-[390px] flex-col gap-6 rounded-t-[32px] md:rounded-[32px] md:border md:border-white/60 md:shadow-[0_-8px_32px_rgba(0,0,0,0.1)]">
             <div className="flex flex-col gap-2 text-center">
-              <h1 className="text-headline-lg text-[#1a1c1d]">Where is home?</h1>
-              <p className="text-body-lg text-[#414755]">
+              <h1 className="text-[32px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1a1c1d]">
+                Where is home?
+              </h1>
+              <p className="text-[17px] leading-[1.5] text-[#414755]">
                 Set your primary departure hub for a frictionless experience.
               </p>
             </div>
 
-            <div className="relative w-full group">
+            <div className="group relative w-full">
               <span className="absolute left-4 top-1/2 z-10 -translate-y-1/2 text-[#717786] transition-colors group-focus-within:text-[#0058bc]">
                 <AppIcon name="flight_takeoff" className="h-6 w-6" />
               </span>
               <input
                 type="text"
                 placeholder="e.g., JFK, LHR, DXB"
-                className="h-[60px] w-full rounded-xl border-[0.5px] border-[#c1c6d7] bg-white/40 pl-[48px] pr-4 text-body-lg text-[#1a1c1d] shadow-inner outline-none transition-all placeholder:text-[#717786] focus:border-[#0058bc] focus:ring-1 focus:ring-[#0058bc]"
+                className="h-[60px] w-full rounded-xl border-[0.5px] border-[#c1c6d7] bg-white/40 pl-[48px] pr-4 text-[17px] leading-[1.5] text-[#1a1c1d] shadow-inner outline-none transition-all placeholder:text-[#717786] focus:border-[#0058bc] focus:ring-1 focus:ring-[#0058bc]"
               />
             </div>
 
@@ -360,7 +339,7 @@ function AuthSlide({ onComplete }: { onComplete: () => void }) {
 
             <div className="flex items-center gap-4 py-2">
               <div className="h-px flex-1 bg-[#c1c6d7]/30" />
-              <span className="text-body-sm text-[#717786]">or connect instantly</span>
+              <span className="text-[14px] leading-[1.4] text-[#717786]">or connect instantly</span>
               <div className="h-px flex-1 bg-[#c1c6d7]/30" />
             </div>
 
@@ -392,7 +371,7 @@ function AuthSlide({ onComplete }: { onComplete: () => void }) {
             </div>
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }
@@ -407,12 +386,7 @@ export function FirstVisitOnboarding({
   const finish = () => markComplete(onComplete);
 
   if (slideIndex === 0) {
-    return (
-      <GlobeIntroSlide
-        onNext={() => setSlideIndex(1)}
-        onSkip={finish}
-      />
-    );
+    return <GlobeIntroSlide onNext={() => setSlideIndex(1)} />;
   }
 
   if (slideIndex === 1) {
