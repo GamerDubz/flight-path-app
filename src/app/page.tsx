@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { Globe } from "@/components/ui/cobe-globe";
 import { TopBar } from "@/components/ui/top-bar";
 import { BottomNav } from "@/components/ui/bottom-nav";
+import { OnboardingModal } from "@/components/ui/onboarding-modal";
 import { MOCK_FLIGHTS, MOCK_PROFILE } from "@/lib/mock-data";
 import { flightsToGlobeData } from "@/lib/flights-to-globe";
 import type { Flight } from "@/lib/types";
@@ -96,6 +97,8 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <OnboardingModal />
+
       {showAddModal && (
         <AddFlightModal
           onAdd={handleAddFlight}
