@@ -81,6 +81,7 @@ const iconMap = {
   history: History,
   language_french: Languages,
   landscape: Mountain,
+  location_city: Building2,
   info: Info,
   inventory_2: Package,
   lock: Lock,
@@ -128,7 +129,7 @@ export function AppIcon({
   strokeWidth,
   ...props
 }: AppIconProps) {
-  const Icon = iconMap[name];
+  const Icon = iconMap[name] ?? CircleHelp;
 
   return (
     <Icon
