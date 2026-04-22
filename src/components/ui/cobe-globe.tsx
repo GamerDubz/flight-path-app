@@ -20,6 +20,7 @@ interface GlobeProps {
   markers?: Marker[];
   arcs?: Arc[];
   className?: string;
+  revision?: string;
   markerColor?: [number, number, number];
   baseColor?: [number, number, number];
   arcColor?: [number, number, number];
@@ -40,6 +41,7 @@ export function Globe({
   markers = [],
   arcs = [],
   className = "",
+  revision,
   markerColor = [0.0, 0.48, 1.0], // Azure blue #007AFF
   baseColor = [1, 1, 1],
   arcColor = [0.0, 0.48, 1.0], // Azure blue #007AFF
@@ -230,6 +232,7 @@ export function Globe({
       if (globe) globe.destroy();
     };
   }, [
+    revision,
     markers,
     arcs,
     markerColor,
@@ -251,6 +254,7 @@ export function Globe({
   return (
     <div className={`relative aspect-square select-none ${className}`}>
       <canvas
+        key={revision ?? "default"}
         ref={canvasRef}
         onPointerDown={handlePointerDown}
         style={{

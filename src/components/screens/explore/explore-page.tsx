@@ -92,8 +92,11 @@ export default function HomePage() {
   const [showAllFlights, setShowAllFlights] = useState(false);
 
   const { markers, arcs } = useMemo(() => flightsToGlobeData(flights), [flights]);
-  const globeKey = useMemo(
-    () => flights.map((flight) => `${flight.id}:${flight.origin_iata}-${flight.destination_iata}`).join("|"),
+  const globeRevision = useMemo(
+    () =>
+      flights
+        .map((flight) => `${flight.id}:${flight.origin_iata}-${flight.destination_iata}`)
+        .join("|"),
     [flights]
   );
   const totalMiles = flights.reduce((sum, flight) => sum + (flight.distance_miles ?? 0), 0);
@@ -131,9 +134,9 @@ export default function HomePage() {
           <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-(--color-primary-fixed)/20 via-transparent to-background/90" />
 
           <div className="relative flex items-center justify-center overflow-hidden px-0 pb-6 pt-6">
-            <div className="mx-auto w-[92vw] max-w-[520px]">
+            <div key={globeRevision} className="mx-auto w-[92vw] max-w-[520px]">
               <Globe
-                key={globeKey}
+                revision={globeRevision}
                 markers={markers}
                 arcs={arcs}
                 markerColor={[0.0, 0.48, 1.0]}
