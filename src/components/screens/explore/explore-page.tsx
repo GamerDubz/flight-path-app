@@ -98,6 +98,10 @@ export default function ExplorePage() {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const { markers, arcs } = useMemo(() => flightsToGlobeData(flights), [flights]);
+  const globeKey = useMemo(
+    () => flights.map((flight) => `${flight.id}:${flight.origin_iata}-${flight.destination_iata}`).join("|"),
+    [flights]
+  );
   const totalMiles = flights.reduce((sum, flight) => sum + (flight.distance_miles ?? 0), 0);
 
   useEffect(() => {
@@ -116,7 +120,8 @@ export default function ExplorePage() {
   }, []);
 
   const handleAddFlight = (flight: Partial<Flight>) => {
-    setFlights((prevFlights) => [flight as Flight, ...prevFlights]);
+    const id = flight.id ?? (globalThis.crypto?.randomUUID?.() ?? `flight-${Date.now()}`);
+    setFlights((prevFlights) => [{ ...flight, id } as Flight, ...prevFlights]);
   };
 
   const handleRemoveFlight = (flightId: string) => {
@@ -169,6 +174,7 @@ export default function ExplorePage() {
           <div className="relative flex items-center justify-center overflow-hidden px-0 pb-6 pt-6">
             <div className="mx-auto w-[92vw] max-w-[520px]">
               <Globe
+                key={globeKey}
                 markers={markers}
                 arcs={arcs}
                 markerColor={[0.0, 0.48, 1.0]}
