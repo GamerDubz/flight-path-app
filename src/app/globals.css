@@ -194,3 +194,97 @@ body {
   border: 1px solid var(--color-outline-variant);
   border-radius: 12px;
 }
+
+@keyframes fp-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fp-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fp-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes fp-float-slow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 0) rotate(-2deg);
+  }
+}
+
+@keyframes fp-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fp-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.animate-fp-fade-up {
+  animation: fp-fade-up 0.6s ease both;
+}
+
+.animate-fp-scale-in {
+  animation: fp-scale-in 0.7s ease both;
+}
+
+.animate-fp-float {
+  animation: fp-float 8s ease-in-out infinite;
+}
+
+.animate-fp-float-slow {
+  animation: fp-float-slow 5.5s ease-in-out infinite;
+}
+
+.animate-fp-orbit {
+  animation: fp-orbit 26s linear infinite;
+}
+
+.animate-fp-orbit-slow {
+  animation: fp-orbit 40s linear infinite reverse;
+}
+
+.animate-fp-pulse {
+  animation: fp-pulse 2.4s ease-in-out infinite;
+}
