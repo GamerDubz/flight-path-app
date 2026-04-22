@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "auto:push": "powershell -ExecutionPolicy Bypass -File scripts/auto-push.ps1"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",
