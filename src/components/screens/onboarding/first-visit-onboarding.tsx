@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Globe } from "@/components/ui/cobe-globe";
 import { AppIcon } from "@/components/ui/app-icon";
+import { flightsToGlobeData } from "@/lib/flights-to-globe";
+import { MOCK_FLIGHTS } from "@/lib/mock-data";
 
 const STORAGE_KEY = "flight-path-onboarding-completed";
 
@@ -16,6 +18,7 @@ const PERMISSIONS_BG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDD_zhC58TKMFxna8TJxOZjIT2jyWt1cm42RYXirmhwyLnmWI0T7gu5-8sTcr81l5CSrY2Rm6O8hDXUIDP3dMTQ9sgAVj-prFWqTrgC5YnOAloTYUrPoqmapSdbfR-M0QrLg7X1FabMQwjwbqgk6rqRokCRCdChjHlWUPhDTChD_a5r77y4bY2VyY8nzRESzeIoZag5l6OkSh0ESjLKKDHHu41bt7lfOvLyqbxh9yLyO5dfvwccDDjzjMA-JdF3a8XwigJ6QbA2C3Vr";
 const AUTH_BG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuAPLpQq7hncY8XWSZe2t0Pm3lMXlDjL5LEZPU4EDHWboVTYSlZE9Do0H_35h0FfJZCIdUf4cUaLEKz1EslzWgA3JCVe5CpcZtE5Ew57wY4nuQiAZcTlVzArBMimv-9AS6VPSn1xw7D8VcCfYV2m7KbaCakk59npXszKnDF75URgoMPHL_UL4CY0ioAMJYu9T54xOHSEITra4lwvkIVzw0GPy53yPSkRQcqMUYwptmm2ptixw0DVLUwga2Di0s18oPSMAuCRqcltd-MM";
+const ONBOARDING_GLOBE = flightsToGlobeData(MOCK_FLIGHTS.slice(0, 4));
 
 function markComplete(onComplete: () => void) {
   try {
@@ -53,16 +56,19 @@ function GlobeIntroSlide({
       <div className="absolute inset-0 z-0 opacity-95">
         <div className="absolute left-1/2 top-[-12vh] w-[176vw] max-w-[1600px] -translate-x-1/2 sm:w-[130vw] lg:top-[-14vh] lg:w-[112vw]">
           <Globe
-            markers={[]}
-            arcs={[]}
+            markers={ONBOARDING_GLOBE.markers}
+            arcs={ONBOARDING_GLOBE.arcs}
             markerColor={[0.96, 0.97, 0.98]}
             baseColor={[0.98, 0.98, 0.99]}
             arcColor={[0.0, 0.48, 1.0]}
             glowColor={[0.92, 0.96, 1.0]}
             dark={0}
             mapBrightness={14}
-            markerSize={0.014}
-            speed={0.00045}
+            markerSize={0.016}
+            markerElevation={0.018}
+            arcWidth={0.75}
+            arcHeight={0.32}
+            speed={0.00055}
             theta={0.08}
             diffuse={1.25}
           />
@@ -305,7 +311,7 @@ function AuthSlide({ onComplete }: { onComplete: () => void }) {
       />
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-[#1a1c1d]/30 pointer-events-none" />
 
-      <main className="relative z-20 flex min-h-dvh flex-col justify-end">
+      <main className="relative z-20 flex min-h-dvh items-end">
         <section className="w-full bg-white/70 px-5 pb-[48px] pt-[32px] backdrop-blur-[40px]">
           <div className="mx-auto flex max-w-[390px] flex-col gap-6 rounded-t-[32px] md:rounded-[32px] md:border md:border-white/60 md:shadow-[0_-8px_32px_rgba(0,0,0,0.1)]">
             <div className="flex flex-col gap-2 text-center">
