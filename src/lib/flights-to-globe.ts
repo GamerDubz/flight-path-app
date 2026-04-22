@@ -45,17 +45,14 @@ export function flightsToGlobeData(flights: Flight[]): GlobeData {
       });
     }
 
-    // Add arc (deduplicate by route)
+    // Add one arc per flight so deleting a flight removes its exact route.
     if (originCoords && destCoords) {
-      const arcKey = `${flight.origin_iata}-${flight.destination_iata}`;
-      if (!arcSet.has(arcKey)) {
-        arcSet.set(arcKey, {
-          id: arcKey.toLowerCase(),
-          from: originCoords,
-          to: destCoords,
-          label: `${flight.origin_iata} → ${flight.destination_iata}`,
-        });
-      }
+      arcSet.set(flight.id, {
+        id: flight.id,
+        from: originCoords,
+        to: destCoords,
+        label: `${flight.origin_iata} → ${flight.destination_iata}`,
+      });
     }
   }
 
