@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { AddFlightModal } from "@/components/ui/add-flight-modal";
 import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
@@ -9,6 +9,43 @@ import { Globe } from "@/components/ui/cobe-globe";
 import { flightsToGlobeData } from "@/lib/flights-to-globe";
 import { MOCK_FLIGHTS, MOCK_PROFILE } from "@/lib/mock-data";
 import type { Flight } from "@/lib/types";
+
+const FLIGHTS_STORAGE_KEY = "flight-path-flights";
+
+function readStoredFlights(): Flight[] {
+  if (typeof window === "undefined") {
+    return MOCK_FLIGHTS;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(FLIGHTS_STORAGE_KEY);
+    if (!raw) {
+      return MOCK_FLIGHTS;
+    }
+
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) {
+      return MOCK_FLIGHTS;
+    }
+
+    const validFlights = parsed.filter((flight): flight is Flight => {
+      if (typeof flight !== "object" || flight === null) return false;
+      const candidate = flight as Partial<Flight>;
+      return (
+        typeof candidate.id === "string" &&
+        typeof candidate.origin_iata === "string" &&
+        typeof candidate.destination_iata === "string" &&
+        typeof candidate.cabin_class === "string" &&
+        typeof candidate.created_at === "string" &&
+        typeof candidate.user_id === "string"
+      );
+    });
+
+    return validFlights.length > 0 ? validFlights : MOCK_FLIGHTS;
+  } catch {
+    return MOCK_FLIGHTS;
+  }
+}
 
 function TravelStatCard({
   icon,
@@ -87,9 +124,28 @@ function RecentFlightItem({
 }
 
 export default function HomePage() {
-  const [flights, setFlights] = useState<Flight[]>(MOCK_FLIGHTS);
+  const [flights, setFlights] = useState<Flight[]>(() => readStoredFlights());
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAllFlights, setShowAllFlights] = useState(false);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(FLIGHTS_STORAGE_KEY, JSON.stringify(flights));
+    } catch {
+      // Ignore storage failures; the live state still updates in memory.
+    }
+  }, [flights]);
+
+  useEffect(() => {
+    function handleStorage(event: StorageEvent) {
+      if (event.key === FLIGHTS_STORAGE_KEY) {
+        setFlights(readStoredFlights());
+      }
+    }
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const { markers, arcs } = useMemo(() => flightsToGlobeData(flights), [flights]);
   const globeRevision = useMemo(
