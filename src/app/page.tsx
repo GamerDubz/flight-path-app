@@ -1,1 +1,5 @@
-export { default } from "@/components/screens/explore/explore-page";
+import { redirect } from "next/navigation";
+
+export default function RootPage() {
+  redirect("/onboarding");
+}

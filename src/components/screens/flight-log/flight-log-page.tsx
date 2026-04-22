@@ -23,7 +23,7 @@ export default function FlightLogPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-linear-to-b from-(--color-surface-container-lowest) to-(--color-surface-container-high)">
-      <TopBar title="Log Flight" showBack backHref="/" />
+      <TopBar title="Log Flight" showBack backHref="/home" />
 
       <main className="flex min-h-screen max-w-md flex-col justify-center px-5 pb-[120px] pt-[100px]">
         <div className="relative flex flex-col overflow-hidden rounded-[24px] border border-white/50 bg-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[25px]">

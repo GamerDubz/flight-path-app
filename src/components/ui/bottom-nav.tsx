@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 
 const navItems: Array<{ href: string; icon: AppIconName; label: string }> = [
-  { href: "/", icon: "explore", label: "Explore" },
+  { href: "/home", icon: "explore", label: "Home" },
   { href: "/trips", icon: "flight_land", label: "My Trips" },
   { href: "/passport", icon: "book", label: "Passport" },
   { href: "/profile", icon: "person", label: "Profile" },

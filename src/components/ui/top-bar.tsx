@@ -13,7 +13,7 @@ interface TopBarProps {
 export function TopBar({
   title = "Flight Path",
   showBack = false,
-  backHref = "/",
+  backHref = "/home",
   rightAction,
 }: TopBarProps) {
   return (

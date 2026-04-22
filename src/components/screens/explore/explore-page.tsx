@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { AddFlightModal } from "@/components/ui/add-flight-modal";
 import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
@@ -9,10 +9,6 @@ import { Globe } from "@/components/ui/cobe-globe";
 import { flightsToGlobeData } from "@/lib/flights-to-globe";
 import { MOCK_FLIGHTS, MOCK_PROFILE } from "@/lib/mock-data";
 import type { Flight } from "@/lib/types";
-import {
-  FirstVisitOnboarding,
-  ONBOARDING_STORAGE_KEY,
-} from "@/components/screens/onboarding/first-visit-onboarding";
 
 function TravelStatCard({
   icon,
@@ -90,12 +86,10 @@ function RecentFlightItem({
   );
 }
 
-export default function ExplorePage() {
+export default function HomePage() {
   const [flights, setFlights] = useState<Flight[]>(MOCK_FLIGHTS);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAllFlights, setShowAllFlights] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const { markers, arcs } = useMemo(() => flightsToGlobeData(flights), [flights]);
   const globeKey = useMemo(
@@ -103,21 +97,6 @@ export default function ExplorePage() {
     [flights]
   );
   const totalMiles = flights.reduce((sum, flight) => sum + (flight.distance_miles ?? 0), 0);
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      try {
-        const dismissed = window.localStorage.getItem(ONBOARDING_STORAGE_KEY);
-        setShowOnboarding(!dismissed);
-      } catch {
-        setShowOnboarding(true);
-      } finally {
-        setIsReady(true);
-      }
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
 
   const handleAddFlight = (flight: Partial<Flight>) => {
     const id = flight.id ?? (globalThis.crypto?.randomUUID?.() ?? `flight-${Date.now()}`);
@@ -135,26 +114,6 @@ export default function ExplorePage() {
   const visibleFlights = showAllFlights
     ? [...flights].sort((a, b) => new Date(b.departure_time ?? 0).getTime() - new Date(a.departure_time ?? 0).getTime())
     : recentFlights;
-
-  if (!isReady) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-[#061126] via-[#0c1730] to-[#050814] text-white">
-        <div className="animate-fp-fade-up flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10">
-            <AppIcon name="flight_takeoff" filled className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-white/55">Flight Path</div>
-            <div className="text-sm text-white/75">Preparing your journey</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (showOnboarding) {
-    return <FirstVisitOnboarding onComplete={() => setShowOnboarding(false)} />;
-  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
