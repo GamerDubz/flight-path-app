@@ -6,6 +6,7 @@ import { BottomNav } from "@/components/ui/bottom-nav";
 import { MOCK_FLIGHTS } from "@/lib/mock-data";
 import type { Flight } from "@/lib/types";
 import { AddFlightModal } from "@/components/ui/add-flight-modal";
+import { AppIcon } from "@/components/ui/app-icon";
 
 function formatDuration(minutes: number | null): string {
   if (!minutes) return "--";
@@ -101,13 +102,13 @@ export default function TripsPage() {
               onClick={() => setShowAddModal(true)}
               className="bg-[#007AFF] text-white rounded-full p-2.5 shadow-md flex items-center justify-center hover:bg-[#0070eb] transition-colors"
             >
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>add</span>
+              <AppIcon name="add" filled className="h-5 w-5" />
             </button>
           </div>
 
           {/* Search */}
           <div className="mt-4 relative">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-(--color-outline) text-[20px]">search</span>
+            <AppIcon name="search" className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-(--color-outline)" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -138,7 +139,7 @@ export default function TripsPage() {
         <div className="px-4 py-4 flex flex-col gap-3">
           {sorted.length === 0 && (
             <div className="py-16 flex flex-col items-center text-center text-(--color-on-surface-variant)">
-              <span className="material-symbols-outlined text-5xl mb-3 opacity-20">flight_land</span>
+              <AppIcon name="flight_land" className="mb-3 h-12 w-12 opacity-20" />
               <p className="font-medium text-[16px]">No flights match</p>
               <p className="text-[13px] mt-1">Try adjusting your search or filter.</p>
             </div>
@@ -155,12 +156,7 @@ export default function TripsPage() {
               <div className="px-4 pt-4 pb-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-[#007AFF] flex items-center justify-center">
-                    <span
-                      className="material-symbols-outlined text-white text-[20px] rotate-45"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      flight
-                    </span>
+                    <AppIcon name="flight" filled className="h-5 w-5 rotate-45 text-white" />
                   </div>
                   <div>
                     <div className="font-extrabold text-[20px] tracking-tight text-foreground flex items-center gap-2">
@@ -183,7 +179,7 @@ export default function TripsPage() {
                     className="w-8 h-8 rounded-full flex items-center justify-center text-(--color-outline) hover:bg-red-50 hover:text-red-500 transition-colors"
                     title="Remove flight"
                   >
-                    <span className="material-symbols-outlined text-[18px]">delete</span>
+                    <AppIcon name="delete" className="h-[18px] w-[18px]" />
                   </button>
                 </div>
               </div>

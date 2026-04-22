@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 
-const navItems = [
+const navItems: Array<{ href: string; icon: AppIconName; label: string }> = [
   { href: "/", icon: "explore", label: "Explore" },
   { href: "/trips", icon: "flight_land", label: "My Trips" },
   { href: "/passport", icon: "book", label: "Passport" },
@@ -25,12 +26,11 @@ export function BottomNav() {
               isActive ? "text-[#007AFF]" : "text-(--color-on-surface-variant)/60 hover:text-[#007AFF]"
             }`}
           >
-            <span
-              className="material-symbols-outlined text-[24px] mb-0.5"
-              style={isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}
-            >
-              {item.icon}
-            </span>
+            <AppIcon
+              name={item.icon as AppIconName}
+              filled={isActive}
+              className="mb-0.5 h-6 w-6"
+            />
             <span className={`text-[10px] font-bold uppercase tracking-wider ${isActive ? "text-[#007AFF]" : "text-(--color-on-surface-variant)/50"}`}>
               {item.label}
             </span>

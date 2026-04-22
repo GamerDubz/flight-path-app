@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AppIcon } from "@/components/ui/app-icon";
 
 interface TopBarProps {
   title?: string;
@@ -22,16 +23,11 @@ export function TopBar({
           href={backHref}
           className="w-9 h-9 flex items-center justify-center rounded-full bg-(--color-surface-container) hover:bg-(--color-surface-container-high) transition-colors"
         >
-          <span className="material-symbols-outlined text-foreground text-[20px]">arrow_back</span>
+          <AppIcon name="arrow_back" className="h-5 w-5 text-foreground" />
         </Link>
       ) : (
         <div className="flex items-center gap-2">
-          <span
-            className="material-symbols-outlined text-[#007AFF] text-[22px]"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-          >
-            flight_takeoff
-          </span>
+          <AppIcon name="flight_takeoff" filled className="h-6 w-6 text-[#007AFF]" />
         </div>
       )}
 
@@ -41,9 +37,7 @@ export function TopBar({
 
       {rightAction ?? (
         <div className="w-9 h-9 rounded-full overflow-hidden bg-(--color-primary) flex items-center justify-center">
-          <span className="material-symbols-outlined text-white text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-            person
-          </span>
+          <AppIcon name="person" filled className="h-[18px] w-[18px] text-white" />
         </div>
       )}
     </header>

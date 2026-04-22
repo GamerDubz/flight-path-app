@@ -5,6 +5,7 @@ import { Globe } from "@/components/ui/cobe-globe";
 import { TopBar } from "@/components/ui/top-bar";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { OnboardingModal } from "@/components/ui/onboarding-modal";
+import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 import { MOCK_FLIGHTS, MOCK_PROFILE } from "@/lib/mock-data";
 import { flightsToGlobeData } from "@/lib/flights-to-globe";
 import type { Flight } from "@/lib/types";
@@ -15,12 +16,7 @@ import { AddFlightModal } from "@/components/ui/add-flight-modal";
 function StatCard({ icon, label, value, sub }: { icon: string; label: string; value: string; sub?: string }) {
   return (
     <div className="stat-badge px-4 py-3 flex items-center gap-3">
-      <span
-        className="material-symbols-outlined text-[#007AFF] text-2xl"
-        style={{ fontVariationSettings: "'FILL' 1" }}
-      >
-        {icon}
-      </span>
+      <AppIcon name={icon as AppIconName} filled className="h-6 w-6 shrink-0 text-[#007AFF]" />
       <div>
         <div className="text-(--color-on-surface-variant) text-[11px] font-bold uppercase tracking-wider">{label}</div>
         <div className="text-foreground font-extrabold text-xl leading-tight">{value}</div>
@@ -46,7 +42,7 @@ function RecentFlightRow({ flight, onRemove }: { flight: Flight; onRemove: (id: 
     <div className="flex items-center justify-between py-3 border-b border-(--color-outline-variant)/40 last:border-none group">
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl bg-[#007AFF]/10 flex items-center justify-center shrink-0">
-          <span className="material-symbols-outlined text-[#007AFF] text-[18px] rotate-45" style={{ fontVariationSettings: "'FILL' 1" }}>flight</span>
+          <AppIcon name="flight" filled className="h-[18px] w-[18px] rotate-45 text-[#007AFF]" />
         </div>
         <div>
           <div className="font-bold text-[15px] text-foreground">
@@ -66,7 +62,7 @@ function RecentFlightRow({ flight, onRemove }: { flight: Flight; onRemove: (id: 
           className="w-7 h-7 rounded-full flex items-center justify-center text-(--color-on-surface-variant)/40 hover:bg-red-50 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
           title="Remove flight"
         >
-          <span className="material-symbols-outlined text-[16px]">delete</span>
+          <AppIcon name="delete" className="h-4 w-4" />
         </button>
       </div>
     </div>
@@ -172,7 +168,7 @@ export default function HomePage() {
 
           {flights.length === 0 && (
             <div className="py-10 flex flex-col items-center text-center text-(--color-on-surface-variant)">
-              <span className="material-symbols-outlined text-5xl mb-3 opacity-30">flight_land</span>
+              <AppIcon name="flight_land" className="mb-3 h-12 w-12 opacity-30" />
               <p className="text-body-lg font-medium">No flights yet</p>
               <p className="text-body-sm mt-1">Add your first flight to see it on the globe.</p>
             </div>
@@ -209,16 +205,16 @@ export default function HomePage() {
             onClick={() => setShowAddModal(true)}
             className="w-full bg-[#007AFF] text-white rounded-2xl py-4 font-bold text-[16px] flex items-center justify-center gap-2 hover:bg-[#0070eb] transition-colors shadow-[0_4px_14px_rgba(0,122,255,0.35)] active:scale-[0.98]"
           >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
+            <AppIcon name="add_circle" filled className="h-5 w-5" />
             Add New Flight to Globe
           </button>
           <div className="grid grid-cols-2 gap-3">
             <a href="/passport" className="bg-white border border-(--color-outline-variant) rounded-2xl py-3.5 font-semibold text-[14px] flex items-center justify-center gap-2 text-foreground hover:bg-(--color-surface-container-low) transition-colors">
-              <span className="material-symbols-outlined text-[#FF9500] text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>book</span>
+              <AppIcon name="book" filled className="h-5 w-5 text-[#FF9500]" />
               Passport
             </a>
             <a href="/trips" className="bg-white border border-(--color-outline-variant) rounded-2xl py-3.5 font-semibold text-[14px] flex items-center justify-center gap-2 text-foreground hover:bg-(--color-surface-container-low) transition-colors">
-              <span className="material-symbols-outlined text-[#34C759] text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>history</span>
+              <AppIcon name="history" filled className="h-5 w-5 text-[#34C759]" />
               All Trips
             </a>
           </div>

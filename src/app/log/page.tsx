@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { TopBar } from "@/components/ui/top-bar";
 import { useRouter } from "next/navigation";
+import { AppIcon } from "@/components/ui/app-icon";
 
 export default function LogFlightPage() {
   const router = useRouter();
@@ -30,9 +31,7 @@ export default function LogFlightPage() {
           {/* Flight Number Search */}
           <div className="p-5 border-b border-(--color-outline-variant)/30 bg-white/50">
             <div className="relative flex items-center bg-white/50 rounded-full border border-white/80 focus-within:border-[#007AFF] transition-colors h-12 px-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-              <span className="material-symbols-outlined text-(--color-outline) mr-3">
-                search
-              </span>
+              <AppIcon name="search" className="mr-3 h-5 w-5 text-(--color-outline)" />
               <input
                 className="bg-transparent border-none focus:ring-0 focus:outline-none w-full text-body-lg text-foreground placeholder:text-(--color-outline)/70 p-0"
                 placeholder="Flight Number (e.g., BA117)"
@@ -66,9 +65,7 @@ export default function LogFlightPage() {
             <div className="flex-1 flex flex-col items-center justify-center relative px-2 z-0">
               <div className="w-full h-px border-t border-dashed border-[#007AFF] absolute top-1/2 left-0 -translate-y-1/2" />
               <div className="w-8 h-8 rounded-full bg-white border border-[#007AFF]/20 flex items-center justify-center relative z-10 shadow-[0_2px_8px_rgba(0,122,255,0.15)]">
-                <span className="material-symbols-outlined text-[#007AFF] rotate-90 text-[20px]">
-                  flight
-                </span>
+                <AppIcon name="flight" filled className="h-5 w-5 rotate-90 text-[#007AFF]" />
               </div>
             </div>
 
@@ -100,9 +97,7 @@ export default function LogFlightPage() {
           <div className="px-5 pb-5 pt-0 grid grid-cols-3 gap-4">
             <div className="flex flex-col">
               <label className="text-label-bold text-(--color-outline) mb-2 flex items-center">
-                <span className="material-symbols-outlined text-[14px] mr-1">
-                  calendar_today
-                </span>
+                <AppIcon name="calendar_today" className="mr-1 h-[14px] w-[14px]" />
                 Date
               </label>
               <input
@@ -113,9 +108,7 @@ export default function LogFlightPage() {
 
             <div className="flex flex-col relative">
               <label className="text-label-bold text-(--color-outline) mb-2 flex items-center">
-                <span className="material-symbols-outlined text-[14px] mr-1">
-                  airline_seat_recline_extra
-                </span>
+                <AppIcon name="airline_seat_recline_extra" className="mr-1 h-[14px] w-[14px]" />
                 Class
               </label>
               <select
@@ -128,16 +121,12 @@ export default function LogFlightPage() {
                 <option>Business</option>
                 <option>First</option>
               </select>
-              <span className="material-symbols-outlined absolute right-2 bottom-2 text-(--color-outline) pointer-events-none text-[18px]">
-                expand_more
-              </span>
+              <AppIcon name="expand_more" className="pointer-events-none absolute right-2 bottom-2 h-4 w-4 text-(--color-outline)" />
             </div>
 
             <div className="flex flex-col">
               <label className="text-label-bold text-(--color-outline) mb-2 flex items-center">
-                <span className="material-symbols-outlined text-[14px] mr-1">
-                  chair
-                </span>
+                <AppIcon name="chair" className="mr-1 h-[14px] w-[14px]" />
                 Seat
               </label>
               <input
@@ -164,12 +153,7 @@ export default function LogFlightPage() {
                   isSliding ? "translate-x-[calc(100vw-120px)]" : "group-hover:translate-x-2"
                 }`}
               >
-                <span
-                  className="material-symbols-outlined text-[#0070eb] rotate-90 text-[24px]"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  flight
-                </span>
+                <AppIcon name="flight" filled className="h-6 w-6 rotate-90 text-[#0070eb]" />
               </div>
             </button>
           </div>

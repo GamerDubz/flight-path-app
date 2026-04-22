@@ -2,6 +2,7 @@
 
 import { TopBar } from "@/components/ui/top-bar";
 import { BottomNav } from "@/components/ui/bottom-nav";
+import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 import { MOCK_PROFILE, MOCK_FLIGHTS } from "@/lib/mock-data";
 
 export default function ProfilePage() {
@@ -18,9 +19,7 @@ export default function ProfilePage() {
         {/* Avatar */}
         <div className="flex flex-col items-center gap-4">
           <div className="w-24 h-24 rounded-full bg-linear-to-br from-[#007AFF] to-[#0070eb] flex items-center justify-center shadow-[0_8px_24px_rgba(0,112,235,0.3)]">
-            <span className="material-symbols-outlined text-white text-5xl">
-              person
-            </span>
+            <AppIcon name="person" filled className="h-12 w-12 text-white" />
           </div>
           <div className="text-center">
             <h1 className="text-headline-lg text-foreground">
@@ -74,16 +73,12 @@ export default function ProfilePage() {
               className="flex items-center justify-between px-5 py-4 hover:bg-white/40 transition-colors first:rounded-t-xl last:rounded-b-xl"
             >
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-(--color-outline)">
-                  {item.icon}
-                </span>
+                <AppIcon name={item.icon as AppIconName} className="h-5 w-5 text-(--color-outline)" />
                 <span className="text-body-lg text-foreground">
                   {item.label}
                 </span>
               </div>
-              <span className="material-symbols-outlined text-(--color-outline-variant) text-lg">
-                chevron_right
-              </span>
+              <AppIcon name="chevron_right" className="h-5 w-5 text-(--color-outline-variant)" />
             </button>
           ))}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 
 const STORAGE_KEY = "flight-path-onboarding-dismissed";
 
@@ -78,9 +79,7 @@ export function OnboardingModal() {
               {steps.map((step) => (
                 <div key={step.title} className="flex items-start gap-3">
                   <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-(--color-surface-container-low) text-[#007AFF]">
-                    <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      {step.icon}
-                    </span>
+                    <AppIcon name={step.icon as AppIconName} filled className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-foreground">{step.title}</h3>

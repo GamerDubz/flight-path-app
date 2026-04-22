@@ -2,6 +2,7 @@
 
 import { TopBar } from "@/components/ui/top-bar";
 import { BottomNav } from "@/components/ui/bottom-nav";
+import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 import {
   MOCK_PROFILE,
   MOCK_STAMPS,
@@ -10,7 +11,7 @@ import {
   MOCK_UNLOCKED_LANDMARK_IDS,
 } from "@/lib/mock-data";
 
-const materialIcons: Record<string, string> = {
+const materialIcons: Record<string, AppIconName> = {
   bolt: "bolt",
   star: "star",
   diamond: "diamond",
@@ -53,12 +54,7 @@ export default function PassportPage() {
           {/* XP Card */}
           <div className="glass-panel rounded-xl p-5 flex flex-col gap-2">
             <div className="flex items-center gap-2 text-[#007AFF]">
-              <span
-                className="material-symbols-outlined text-2xl"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-              >
-                military_tech
-              </span>
+              <AppIcon name="military_tech" filled className="h-6 w-6" />
               <span className="text-label-bold text-[#0070eb]">
                 Air Miles (XP)
               </span>
@@ -80,12 +76,7 @@ export default function PassportPage() {
           {/* Materials Card */}
           <div className="glass-panel rounded-xl p-5 flex flex-col gap-2">
             <div className="flex items-center gap-2 text-[#007AFF]">
-              <span
-                className="material-symbols-outlined text-2xl"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-              >
-                inventory_2
-              </span>
+              <AppIcon name="inventory_2" filled className="h-6 w-6" />
               <span className="text-label-bold text-[#0070eb]">
                 Materials
               </span>
@@ -98,9 +89,7 @@ export default function PassportPage() {
                     className="flex flex-col items-center gap-1"
                   >
                     <div className="w-10 h-10 rounded-full bg-(--color-primary-fixed)/30 flex items-center justify-center text-[#007AFF] border border-[#007AFF]/20">
-                      <span className="material-symbols-outlined text-lg">
-                        {materialIcons[m.material_type] ?? "token"}
-                      </span>
+                      <AppIcon name={materialIcons[m.material_type] ?? "token"} className="h-5 w-5" />
                     </div>
                     <span className="text-label-bold text-(--color-on-surface-variant)">
                       {m.quantity}
@@ -144,9 +133,7 @@ export default function PassportPage() {
                       } ${i % 2 === 1 ? "mt-8" : ""}`}
                     >
                       <div className="w-20 h-20 rounded-full border-2 border-(--color-on-primary-fixed) text-(--color-on-primary-fixed) flex flex-col items-center justify-center opacity-80 mix-blend-multiply bg-white/10">
-                        <span className="material-symbols-outlined text-3xl mb-1">
-                          {stamp.icon}
-                        </span>
+                        <AppIcon name={stamp.icon as AppIconName} className="mb-1 h-8 w-8" />
                         <span className="text-[10px] font-bold uppercase tracking-wider">
                           {stamp.airport_iata}
                         </span>
@@ -166,9 +153,7 @@ export default function PassportPage() {
             {/* Empty page */}
             <div className="min-w-[300px] w-[80vw] max-w-[400px] aspect-3/4 glass-panel rounded-[24px] p-5 flex flex-col snap-center items-center justify-center border-dashed">
               <div className="w-16 h-16 rounded-full bg-(--color-surface-variant) flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined text-(--color-tertiary) text-3xl">
-                  add
-                </span>
+                <AppIcon name="add" className="h-8 w-8 text-(--color-tertiary)" />
               </div>
               <span className="text-body-lg text-(--color-on-surface-variant) text-center">
                 Complete more journeys to fill this page.
@@ -205,9 +190,7 @@ export default function PassportPage() {
                         : "bg-(--color-surface-variant) text-(--color-tertiary)"
                     }`}
                   >
-                    <span className="material-symbols-outlined text-3xl">
-                      {lm.icon}
-                    </span>
+                    <AppIcon name={lm.icon as AppIconName} className="h-8 w-8" />
                   </div>
                   <div className="text-center">
                     <div className="text-body-sm font-semibold text-foreground">
@@ -221,9 +204,7 @@ export default function PassportPage() {
                       }`}
                     >
                       {!isUnlocked && (
-                        <span className="material-symbols-outlined text-[10px]">
-                          lock
-                        </span>
+                        <AppIcon name="lock" className="h-[10px] w-[10px]" />
                       )}
                       {lm.cost_xp.toLocaleString()} XP
                     </div>

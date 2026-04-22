@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import type { Flight } from "@/lib/types";
 import { getAirportCity, AIRPORTS } from "@/lib/airports";
+import { AppIcon } from "@/components/ui/app-icon";
 
 function AirportCombobox({
   label,
@@ -129,7 +130,7 @@ export function AddFlightModal({
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-full bg-(--color-surface-container) text-(--color-on-surface-variant) hover:bg-(--color-surface-container-high) transition-colors"
           >
-            <span className="material-symbols-outlined text-lg">close</span>
+            <AppIcon name="close" className="h-4 w-4" />
           </button>
         </div>
 
