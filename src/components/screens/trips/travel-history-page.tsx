@@ -5,8 +5,7 @@ import { AddFlightModal } from "@/components/ui/add-flight-modal";
 import { AppIcon } from "@/components/ui/app-icon";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { TopBar } from "@/components/ui/top-bar";
-import { MOCK_FLIGHTS } from "@/lib/mock-data";
-import type { Flight } from "@/lib/types";
+import { useFlights } from "@/lib/flight-store";
 
 function formatDuration(minutes: number | null): string {
   if (!minutes) return "--";
@@ -33,21 +32,16 @@ const cabinColors: Record<string, string> = {
 type CabinFilter = "All" | "Business" | "Economy" | "First";
 
 export default function TravelHistoryPage() {
-  const [flights, setFlights] = useState<Flight[]>(MOCK_FLIGHTS);
+  const { flights, addFlight, removeFlight } = useFlights();
   const [filter, setFilter] = useState<CabinFilter>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [removingFlightId, setRemovingFlightId] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const handleAddFlight = (flight: Partial<Flight>) => {
-    const id = flight.id ?? (globalThis.crypto?.randomUUID?.() ?? `flight-${Date.now()}`);
-    setFlights((prevFlights) => [{ ...flight, id } as Flight, ...prevFlights]);
-  };
-
   const handleRemoveFlight = (flightId: string) => {
     setRemovingFlightId(flightId);
     setTimeout(() => {
-      setFlights((prevFlights) => prevFlights.filter((flight) => flight.id !== flightId));
+      removeFlight(flightId);
       setRemovingFlightId(null);
     }, 300);
   };
@@ -80,7 +74,7 @@ export default function TravelHistoryPage() {
     <div className="min-h-screen bg-background">
       {showAddModal && (
         <AddFlightModal
-          onAdd={handleAddFlight}
+          onAdd={addFlight}
           onClose={() => setShowAddModal(false)}
         />
       )}

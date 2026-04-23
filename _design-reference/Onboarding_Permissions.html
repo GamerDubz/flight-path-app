@@ -156,11 +156,11 @@
 <!-- Atmospheric Background Layer -->
 <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60" data-alt="view from an airplane window looking out at bright white clouds and a clear serene blue sky at high altitude" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDD_zhC58TKMFxna8TJxOZjIT2jyWt1cm42RYXirmhwyLnmWI0T7gu5-8sTcr81l5CSrY2Rm6O8hDXUIDP3dMTQ9sgAVj-prFWqTrgC5YnOAloTYUrPoqmapSdbfR-M0QrLg7X1FabMQwjwbqgk6rqRokCRCdChjHlWUPhDTChD_a5r77y4bY2VyY8nzRESzeIoZag5l6OkSh0ESjLKKDHHu41bt7lfOvLyqbxh9yLyO5dfvwccDDjzjMA-JdF3a8XwigJ6QbA2C3Vr');"></div>
 <!-- Subtle Gradient Overlay to enhance legibility and 'Aero' feel -->
-<div class="absolute inset-0 z-0 bg-gradient-to-b from-white/20 to-surface-variant/40 mix-blend-overlay"></div>
+<div class="absolute inset-0 z-0 bg-linear-to-b from-white/20 to-surface-variant/40 mix-blend-overlay"></div>
 <!-- Main Glassmorphism Content Card -->
 <main class="relative z-10 w-full max-w-[375px] bg-white/70 backdrop-blur-[25px] border-[0.5px] border-white/50 rounded-[24px] p-section-margin flex flex-col items-center text-center shadow-[0_8px_32px_rgba(0,0,0,0.08)]">
 <!-- Icon Container - Level 2 Glass inside Level 1 -->
-<div class="w-20 h-20 rounded-full bg-white/50 backdrop-blur-[40px] border-[0.5px] border-white flex items-center justify-center mb-6 shadow-sm">
+<div class="w-20 h-20 rounded-full bg-white/50 backdrop-blur-2xl border-[0.5px] border-white flex items-center justify-center mb-6 shadow-sm">
 <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center relative">
 <!-- Inner pulse effect ring -->
 <div class="absolute inset-0 rounded-full border border-primary/20 scale-110"></div>
@@ -172,10 +172,10 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-section-margin max-w-[280px]">Allow notifications for boarding reminders, gate changes, and milestone alerts.</p>
 <!-- Action Buttons -->
 <div class="w-full flex flex-col gap-unit">
-<button class="w-full py-[16px] px-container-padding bg-primary text-on-primary font-label-bold text-label-bold uppercase rounded-full shadow-md hover:bg-primary-container hover:shadow-lg transition-all active:scale-[0.98]">
+<button class="w-full py-card-gap px-container-padding bg-primary text-on-primary font-label-bold text-label-bold uppercase rounded-full shadow-md hover:bg-primary-container hover:shadow-lg transition-all active:scale-[0.98]">
                 Enable Notifications
             </button>
-<button class="w-full py-[16px] px-container-padding text-on-surface-variant font-label-bold text-label-bold uppercase rounded-full bg-white/20 hover:bg-white/40 border-[0.5px] border-transparent hover:border-white/50 transition-all active:scale-[0.98]">
+<button class="w-full py-card-gap px-container-padding text-on-surface-variant font-label-bold text-label-bold uppercase rounded-full bg-white/20 hover:bg-white/40 border-[0.5px] border-transparent hover:border-white/50 transition-all active:scale-[0.98]">
                 Not right now
             </button>
 </div>

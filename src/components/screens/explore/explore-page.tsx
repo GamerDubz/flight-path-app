@@ -1,51 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { AddFlightModal } from "@/components/ui/add-flight-modal";
 import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 import { TopBar } from "@/components/ui/top-bar";
 import { Globe } from "@/components/ui/cobe-globe";
 import { flightsToGlobeData } from "@/lib/flights-to-globe";
-import { MOCK_FLIGHTS, MOCK_PROFILE } from "@/lib/mock-data";
+import { useFlights } from "@/lib/flight-store";
 import type { Flight } from "@/lib/types";
-
-const FLIGHTS_STORAGE_KEY = "flight-path-flights";
-
-function readStoredFlights(): Flight[] {
-  if (typeof window === "undefined") {
-    return MOCK_FLIGHTS;
-  }
-
-  try {
-    const raw = window.localStorage.getItem(FLIGHTS_STORAGE_KEY);
-    if (!raw) {
-      return MOCK_FLIGHTS;
-    }
-
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) {
-      return MOCK_FLIGHTS;
-    }
-
-    const validFlights = parsed.filter((flight): flight is Flight => {
-      if (typeof flight !== "object" || flight === null) return false;
-      const candidate = flight as Partial<Flight>;
-      return (
-        typeof candidate.id === "string" &&
-        typeof candidate.origin_iata === "string" &&
-        typeof candidate.destination_iata === "string" &&
-        typeof candidate.cabin_class === "string" &&
-        typeof candidate.created_at === "string" &&
-        typeof candidate.user_id === "string"
-      );
-    });
-
-    return validFlights.length > 0 ? validFlights : MOCK_FLIGHTS;
-  } catch {
-    return MOCK_FLIGHTS;
-  }
-}
 
 function TravelStatCard({
   icon,
@@ -124,28 +87,9 @@ function RecentFlightItem({
 }
 
 export default function HomePage() {
-  const [flights, setFlights] = useState<Flight[]>(() => readStoredFlights());
+  const { flights, addFlight, removeFlight } = useFlights();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAllFlights, setShowAllFlights] = useState(false);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(FLIGHTS_STORAGE_KEY, JSON.stringify(flights));
-    } catch {
-      // Ignore storage failures; the live state still updates in memory.
-    }
-  }, [flights]);
-
-  useEffect(() => {
-    function handleStorage(event: StorageEvent) {
-      if (event.key === FLIGHTS_STORAGE_KEY) {
-        setFlights(readStoredFlights());
-      }
-    }
-
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
 
   const { markers, arcs } = useMemo(() => flightsToGlobeData(flights), [flights]);
   const globeRevision = useMemo(
@@ -157,14 +101,15 @@ export default function HomePage() {
   );
   const totalMiles = flights.reduce((sum, flight) => sum + (flight.distance_miles ?? 0), 0);
 
-  const handleAddFlight = (flight: Partial<Flight>) => {
-    const id = flight.id ?? (globalThis.crypto?.randomUUID?.() ?? `flight-${Date.now()}`);
-    setFlights((prevFlights) => [{ ...flight, id } as Flight, ...prevFlights]);
-  };
-
-  const handleRemoveFlight = (flightId: string) => {
-    setFlights((prevFlights) => prevFlights.filter((flight) => flight.id !== flightId));
-  };
+  const uniqueCountries = useMemo(() => {
+    const countries = new Set<string>();
+    for (const f of flights) {
+      // We'll count unique IATA codes as a proxy for airports/cities visited
+      countries.add(f.origin_iata);
+      countries.add(f.destination_iata);
+    }
+    return countries.size;
+  }, [flights]);
 
   const recentFlights = [...flights]
     .sort((a, b) => new Date(b.departure_time ?? 0).getTime() - new Date(a.departure_time ?? 0).getTime())
@@ -178,7 +123,7 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col bg-background">
       {showAddModal && (
         <AddFlightModal
-          onAdd={handleAddFlight}
+          onAdd={addFlight}
           onClose={() => setShowAddModal(false)}
         />
       )}
@@ -216,10 +161,10 @@ export default function HomePage() {
             <TravelStatCard
               icon="route"
               label="Miles"
-              value={totalMiles > 0 ? `${(totalMiles / 1000).toFixed(0)}k` : `${(MOCK_PROFILE.total_miles / 1000).toFixed(0)}k`}
+              value={totalMiles > 0 ? `${(totalMiles / 1000).toFixed(0)}k` : "0"}
               sublabel="total"
             />
-            <TravelStatCard icon="public" label="Countries" value={String(MOCK_PROFILE.total_countries)} sublabel="visited" />
+            <TravelStatCard icon="public" label="Airports" value={String(uniqueCountries)} sublabel="visited" />
           </div>
         </section>
 
@@ -241,7 +186,7 @@ export default function HomePage() {
 
           <div>
             {visibleFlights.map((flight) => (
-              <RecentFlightItem key={flight.id} flight={flight} onRemove={handleRemoveFlight} />
+              <RecentFlightItem key={flight.id} flight={flight} onRemove={removeFlight} />
             ))}
           </div>
 
@@ -258,11 +203,13 @@ export default function HomePage() {
           <div className="mb-3 flex items-center justify-between">
             <div>
               <h3 className="text-[16px] font-bold text-foreground">Air Miles XP</h3>
-              <p className="text-[13px] text-(--color-on-surface-variant)">Level 4 Explorer</p>
+              <p className="text-[13px] text-(--color-on-surface-variant)">
+                Level {Math.max(1, Math.floor(totalMiles / 15000)) + 1} Explorer
+              </p>
             </div>
             <div className="text-right">
               <span className="text-xl font-extrabold text-[#007AFF]">
-                {MOCK_PROFILE.air_miles_xp.toLocaleString()}
+                {totalMiles.toLocaleString()}
               </span>
               <span className="text-[13px] text-(--color-on-surface-variant)"> XP</span>
             </div>
@@ -270,12 +217,12 @@ export default function HomePage() {
           <div className="h-2.5 w-full overflow-hidden rounded-full bg-(--color-surface-container)">
             <div
               className="h-full rounded-full bg-linear-to-r from-[#007AFF] to-[#00C6FF] transition-all duration-700"
-              style={{ width: `${((MOCK_PROFILE.air_miles_xp % 15000) / 15000) * 100}%` }}
+              style={{ width: `${((totalMiles % 15000) / 15000) * 100}%` }}
             />
           </div>
           <div className="mt-2 flex justify-between text-[12px] text-(--color-on-surface-variant)">
-            <span>Level 4</span>
-            <span>{(15000 - (MOCK_PROFILE.air_miles_xp % 15000)).toLocaleString()} XP to Level 5</span>
+            <span>Level {Math.max(1, Math.floor(totalMiles / 15000)) + 1}</span>
+            <span>{(15000 - (totalMiles % 15000)).toLocaleString()} XP to Level {Math.max(1, Math.floor(totalMiles / 15000)) + 2}</span>
           </div>
         </section>
 

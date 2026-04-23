@@ -110,14 +110,14 @@
 <!-- Main Visual Canvas (Aero-Glass Container) -->
 <main class="flex-1 w-full max-w-md mx-auto flex flex-col items-center justify-center p-container-padding z-10 relative">
 <!-- Floating Glass Card (Level 1) -->
-<div class="w-full aspect-[4/5] bg-white/70 backdrop-blur-[25px] border-[0.5px] border-white/50 rounded-3xl shadow-[0_8px_32px_rgba(0,40,90,0.08)] flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="w-full aspect-4/5 bg-white/70 backdrop-blur-[25px] border-[0.5px] border-white/50 rounded-3xl shadow-[0_8px_32px_rgba(0,40,90,0.08)] flex flex-col items-center justify-center relative overflow-hidden group">
 <!-- Inner Glare Reflection -->
-<div class="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/60 pointer-events-none z-20"></div>
+<div class="absolute inset-0 bg-linear-to-tr from-white/10 via-transparent to-white/60 pointer-events-none z-20"></div>
 <!-- 3D Landmark Render -->
 <div class="relative w-full h-full flex items-center justify-center">
 <img class="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-90 scale-105" data-alt="3D white-glass rendered Eiffel Tower rotating inside a luminous crystalline void, soft ethereal lighting, high contrast aero-premium aesthetic, bright whites and subtle azure reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoRw6PmeicTlYHXAY8iPM3kFN9dTMkOkttXhaWj7BptA1RWBjgwDty9dMco5XAS8PDPb4B3-j3WgrQgG2HxPpA0u1rDVPa17aYUqXD_TJT5iBhrQCDwO4AqQY2VT7CuEppwcyQG3gpX6jrRl6UqrgSniJsEYkhkkGLL4-0gRRmsEjwYaU9gZRc3vqOsyZKS7VzUc_Ed3TOABG7WKQxYbOas817SckP31-lCESUeOvTzMOgxZEzseq_8Qh460PV28OJ_pn5gPrZF4p3"/>
 <!-- Center focal point blur -->
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white/80 pointer-events-none"></div>
+<div class="absolute inset-0 bg-linear-to-b from-transparent via-white/20 to-white/80 pointer-events-none"></div>
 </div>
 <!-- Optional: Decorative subtle grid or scale markers inside the glass -->
 <div class="absolute bottom-8 left-0 w-full flex justify-center gap-1 z-20 opacity-30">
@@ -142,7 +142,7 @@
         </p>
 <!-- Primary Action Button -->
 <button class="w-full h-14 bg-primary text-on-primary rounded-full flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(0,88,188,0.25)] hover:bg-on-primary-fixed-variant transition-colors group relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+<div class="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
 <span class="font-label-bold text-label-bold uppercase">Get Started</span>
 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
 </button>

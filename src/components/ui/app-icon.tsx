@@ -1,5 +1,9 @@
 import type { LucideProps } from "lucide-react";
 import {
+  MapPin,
+  Scan,
+  ArrowLeftRight,
+  CalendarDays,
   ArrowLeft,
   ArrowRight,
   Armchair,
@@ -51,10 +55,12 @@ import {
   Palette,
   Bell,
   Clock3,
+  Minus,
 } from "lucide-react";
 
 const iconMap = {
   add: Plus,
+  remove: Minus,
   add_circle: CirclePlus,
   air: Wind,
   airline_seat_recline_extra: Armchair,
@@ -114,6 +120,10 @@ const iconMap = {
   token: CircleHelp,
   diamond: Gem,
   bolt: Bolt,
+  qr_code_scanner: Scan,
+  swap_horiz: ArrowLeftRight,
+  calendar_month: CalendarDays,
+  map_pin: MapPin,
 } as const;
 
 export type AppIconName = keyof typeof iconMap;

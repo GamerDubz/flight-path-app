@@ -1,12 +1,23 @@
 "use client";
 
+import { useMemo } from "react";
 import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { TopBar } from "@/components/ui/top-bar";
-import { MOCK_FLIGHTS, MOCK_PROFILE } from "@/lib/mock-data";
+import { useFlights } from "@/lib/flight-store";
+import { MOCK_PROFILE } from "@/lib/mock-data";
 
 export default function ProfilePage() {
-  const uniqueAirlines = new Set(MOCK_FLIGHTS.map((flight) => flight.airline).filter(Boolean));
+  const { flights } = useFlights();
+  const uniqueAirlines = useMemo(
+    () => new Set(flights.map((flight) => flight.airline).filter(Boolean)),
+    [flights]
+  );
+  const uniqueAirports = useMemo(() => {
+    const s = new Set<string>();
+    for (const f of flights) { s.add(f.origin_iata); s.add(f.destination_iata); }
+    return s.size;
+  }, [flights]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -28,11 +39,11 @@ export default function ProfilePage() {
 
         <div className="grid w-full grid-cols-3 gap-4">
           <div className="glass-card flex flex-col items-center gap-1 p-4">
-            <span className="text-headline-lg text-[#007AFF]">{MOCK_FLIGHTS.length}</span>
+            <span className="text-headline-lg text-[#007AFF]">{flights.length}</span>
             <span className="text-label-bold text-(--color-on-surface-variant)">Flights</span>
           </div>
           <div className="glass-card flex flex-col items-center gap-1 p-4">
-            <span className="text-headline-lg text-[#007AFF]">{MOCK_PROFILE.total_countries}</span>
+            <span className="text-headline-lg text-[#007AFF]">{uniqueAirports}</span>
             <span className="text-label-bold text-(--color-on-surface-variant)">Countries</span>
           </div>
           <div className="glass-card flex flex-col items-center gap-1 p-4">

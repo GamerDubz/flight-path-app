@@ -3,10 +3,10 @@
 import { AppIcon, type AppIconName } from "@/components/ui/app-icon";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { TopBar } from "@/components/ui/top-bar";
+import { useFlights } from "@/lib/flight-store";
 import {
   MOCK_LANDMARKS,
   MOCK_MATERIALS,
-  MOCK_PROFILE,
   MOCK_STAMPS,
   MOCK_UNLOCKED_LANDMARK_IDS,
 } from "@/lib/mock-data";
@@ -32,8 +32,10 @@ const continentPages = (() => {
 const stampRotations = ["-rotate-6", "rotate-12", "rotate-3", "rotate-6", "-rotate-12", "-rotate-3"];
 
 export default function PassportPage() {
-  const xpProgress = (MOCK_PROFILE.air_miles_xp % 15000) / 15000;
-  const xpToNext = 15000 - (MOCK_PROFILE.air_miles_xp % 15000);
+  const { flights } = useFlights();
+  const totalMiles = flights.reduce((sum, f) => sum + (f.distance_miles ?? 0), 0);
+  const xpProgress = (totalMiles % 15000) / 15000;
+  const xpToNext = 15000 - (totalMiles % 15000);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -52,7 +54,7 @@ export default function PassportPage() {
               <AppIcon name="military_tech" filled className="h-6 w-6" />
               <span className="text-label-bold text-[#0070eb]">Air Miles (XP)</span>
             </div>
-            <div className="text-metric-display text-foreground">{MOCK_PROFILE.air_miles_xp.toLocaleString()}</div>
+            <div className="text-metric-display text-foreground">{totalMiles.toLocaleString()}</div>
             <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-(--color-surface-variant)">
               <div
                 className="h-full rounded-full bg-[#007AFF] transition-all duration-700"
