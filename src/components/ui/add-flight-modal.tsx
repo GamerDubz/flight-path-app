@@ -139,7 +139,7 @@ export function AddFlightModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-[#f2f5fd] overflow-hidden animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-100 h-dvh flex flex-col bg-[#f2f5fd] overflow-hidden animate-in fade-in duration-200">
       
       {/* Background with Image and Gradient Overlay */}
       <div className="absolute inset-0 z-0">
@@ -173,7 +173,7 @@ export function AddFlightModal({
         </header>
 
         {/* Scrollable Content */}
-        <main className="flex-1 overflow-y-auto px-5 pb-6 pt-4 flex flex-col no-scrollbar">
+        <main className="flex-1 min-h-0 overflow-y-auto px-5 pb-6 pt-4 flex flex-col no-scrollbar">
           <form id="add-flight-form" onSubmit={handleSubmit} className="w-full lg:max-w-[900px] sm:max-w-[600px] mx-auto">
             
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-5 lg:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white/60 flex flex-col gap-5 lg:gap-6">
@@ -299,7 +299,7 @@ export function AddFlightModal({
         </main>
 
         {/* Bottom Bar */}
-        <div className="w-full bg-[#f2f5fd] md:bg-transparent md:bg-linear-to-t md:from-[#f2f5fd] md:via-[#f2f5fd]/95 md:to-[#f2f5fd]/0 shrink-0 pt-4 px-5 pb-8 sm:pb-12 flex justify-center relative z-40">
+        <div className="w-full bg-[#f2f5fd] md:bg-transparent md:bg-linear-to-t md:from-[#f2f5fd] md:via-[#f2f5fd]/95 md:to-[#f2f5fd]/0 shrink-0 pt-4 px-5 pb-[calc(env(safe-area-inset-bottom)+2rem)] sm:pb-12 flex justify-center relative z-40">
           <button form="add-flight-form" type="submit" className="w-full lg:max-w-[900px] sm:max-w-[600px] bg-[#007AFF] text-white font-medium text-[16px] py-4 rounded-[20px] shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 active:scale-[0.98] transition-all">
               Add Flight
           </button>
