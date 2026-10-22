@@ -78,8 +78,10 @@ export function FlightProvider({ children }: { children: ReactNode }) {
 
   // Hydrate from localStorage after mount to avoid SSR hydration mismatches
   useEffect(() => {
-    setFlights(readStoredFlights());
-    setMounted(true);
+    queueMicrotask(() => {
+      setFlights(readStoredFlights());
+      setMounted(true);
+    });
   }, []);
 
   // Persist to localStorage whenever the list changes
